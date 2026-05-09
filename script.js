@@ -11,6 +11,7 @@ const doneButton = document.getElementById("doneButton");
 const winnerCard = document.getElementById("winnerCard");
 const statusDisplay = document.getElementById("statusDisplay");
 const inputHint = document.getElementById("inputHint");
+const taskCount = document.getElementById("taskCount");
 
 const W = canvas.width;
 const H = canvas.height;
@@ -48,6 +49,10 @@ function parseTasks() {
 
 function setStatus(message) {
   statusDisplay.textContent = message;
+}
+
+function updateTaskCount(count = parseTasks().length) {
+  taskCount.textContent = count;
 }
 
 function randomUint32() {
@@ -103,6 +108,7 @@ function makeBall(task, index, total) {
 
 function loadBalls({ shuffle = false } = {}) {
   const tasks = parseTasks();
+  updateTaskCount(tasks.length);
 
   if (tasks.length < 5) {
     inputHint.textContent = `Add ${5 - tasks.length} more ${tasks.length === 4 ? "choice" : "choices"} before loading the machine.`;
@@ -150,7 +156,7 @@ function beginPlay() {
   grabButton.disabled = true;
   doneButton.disabled = true;
   winnerCard.textContent = "The claw is choosing...";
-  setStatus("The claw is sliding into place.");
+  setStatus("Random ball selected. The claw is sliding into place.");
 }
 
 function dropClaw() {
@@ -197,7 +203,7 @@ function finishDrop() {
   heldBall.vy = 0;
   pendingRemoval = heldBall.task;
   winnerCard.textContent = heldBall.task;
-  setStatus("Decision made. Do this one next.");
+  setStatus("Decision made. Do this one thing next.");
   doneButton.disabled = false;
   playButton.disabled = false;
   dropButton.disabled = true;
@@ -346,16 +352,33 @@ function drawCabinetInterior() {
   ctx.clearRect(0, 0, W, H);
 
   const bg = ctx.createLinearGradient(0, 0, 0, H);
-  bg.addColorStop(0, "#dffbff");
-  bg.addColorStop(0.62, "#bfe7ed");
-  bg.addColorStop(1, "#8abec8");
+  bg.addColorStop(0, "#e7fcff");
+  bg.addColorStop(0.58, "#c1ebee");
+  bg.addColorStop(1, "#91c5cc");
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
-  ctx.fillStyle = "rgba(255,255,255,0.38)";
-  ctx.fillRect(70, 30, 48, 520);
-  ctx.fillRect(134, 30, 18, 520);
-  ctx.fillRect(640, 24, 30, 360);
+  ctx.fillStyle = "rgba(255,255,255,0.42)";
+  ctx.fillRect(70, 30, 44, 520);
+  ctx.fillRect(128, 30, 16, 520);
+  ctx.fillRect(638, 24, 30, 360);
+
+  ctx.fillStyle = "rgba(36, 36, 44, 0.1)";
+  ctx.fillRect(42, 104, W - 84, 4);
+  ctx.fillRect(42, 142, W - 84, 2);
+
+  ctx.fillStyle = "#edf2f4";
+  ctx.strokeStyle = "#252530";
+  ctx.lineWidth = 5;
+  ctx.beginPath();
+  ctx.roundRect(W / 2 - 128, 22, 256, 54, 8);
+  ctx.fill();
+  ctx.stroke();
+  ctx.fillStyle = "#252530";
+  ctx.font = "900 17px Inter, system-ui, sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("RANDOMIZER RAIL", W / 2, 49);
 
   ctx.fillStyle = "#4f3c51";
   ctx.fillRect(0, floorY, W, H - floorY);
@@ -504,6 +527,7 @@ doneButton.addEventListener("click", removeDoneTask);
 
 taskInput.addEventListener("input", () => {
   const count = parseTasks().length;
+  updateTaskCount(count);
   inputHint.textContent = count >= 5 ? `${count} choices ready to load.` : `Add ${5 - count} more ${count === 4 ? "choice" : "choices"} before loading.`;
 });
 
@@ -522,4 +546,5 @@ if (!CanvasRenderingContext2D.prototype.roundRect) {
 }
 
 loadBalls();
+updateTaskCount();
 requestAnimationFrame(frame);

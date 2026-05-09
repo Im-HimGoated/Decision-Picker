@@ -10,7 +10,10 @@
     <main class="app-shell">
       <section class="machine-panel" aria-label="Decision claw machine">
         <div class="marquee">
-          <span>Decision Claw</span>
+          <div>
+            <span>Decision Claw</span>
+            <small>Arcade task picker</small>
+          </div>
           <div class="marquee-lights" aria-hidden="true">
             <i></i><i></i><i></i><i></i><i></i><i></i>
           </div>
@@ -35,8 +38,15 @@
 
       <aside class="decision-panel" aria-label="Choices and result">
         <section class="entry-area">
-          <h1>Feed the machine your stuck-between-things list.</h1>
-          <p>Put in 5 or more tasks, chores, ideas, meals, errands, or anything else you cannot decide between.</p>
+          <div class="panel-kicker">For big lists and frozen brains</div>
+          <h1>Put in the choices. Let the claw pick one.</h1>
+          <p class="lead">Tasks, chores, ideas, meals, errands, projects, or anything else you cannot decide between.</p>
+
+          <div class="stats-row" aria-label="Machine requirements">
+            <span><strong id="taskCount">6</strong> choices</span>
+            <span>5 minimum</span>
+            <span>equal odds</span>
+          </div>
 
           <label for="taskInput">Choices</label>
           <textarea id="taskInput" rows="8" spellcheck="true">read a book
@@ -54,7 +64,7 @@ plan tomorrow</textarea>
         </section>
 
         <section class="winner-area" aria-live="polite">
-          <div class="result-label">Your next thing</div>
+          <div class="result-label">One thing to do next</div>
           <div class="winner-card" id="winnerCard">Waiting for the claw...</div>
           <button id="doneButton" class="panel-button full" type="button" disabled>Done, remove it</button>
         </section>
