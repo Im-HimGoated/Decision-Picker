@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Decision Claw</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="machine-panel" aria-label="Decision claw machine">
+        <div class="marquee">
+          <span>Decision Claw</span>
+          <div class="marquee-lights" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i>
+          </div>
+        </div>
+
+        <div class="glass">
+          <canvas id="machineCanvas" width="900" height="680" aria-label="A claw machine filled with task balls"></canvas>
+          <div class="prize-chute" aria-hidden="true">
+            <span>Prize Chute</span>
+          </div>
+        </div>
+
+        <div class="cabinet-controls">
+          <div class="status-display" id="statusDisplay">Add at least 5 choices to start.</div>
+          <div class="buttons">
+            <button id="playButton" class="arcade-button secondary" type="button">Play</button>
+            <button id="dropButton" class="arcade-button" type="button" disabled>Drop Claw</button>
+            <button id="grabButton" class="arcade-button accent" type="button" disabled>Grab Prize</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="decision-panel" aria-label="Choices and result">
+        <section class="entry-area">
+          <h1>Feed the machine your stuck-between-things list.</h1>
+          <p>Put in 5 or more tasks, chores, ideas, meals, errands, or anything else you cannot decide between.</p>
+
+          <label for="taskInput">Choices</label>
+          <textarea id="taskInput" rows="8" spellcheck="true">read a book
+write a report
+clean my room
+answer emails
+go for a walk
+plan tomorrow</textarea>
+
+          <div class="entry-actions">
+            <button id="loadButton" class="panel-button" type="button">Load Balls</button>
+            <button id="shuffleButton" class="panel-button ghost" type="button">Shuffle</button>
+          </div>
+          <p class="input-hint" id="inputHint">Each line becomes one ball. The claw chooses one thing for right now.</p>
+        </section>
+
+        <section class="winner-area" aria-live="polite">
+          <div class="result-label">Your next thing</div>
+          <div class="winner-card" id="winnerCard">Waiting for the claw...</div>
+          <button id="doneButton" class="panel-button full" type="button" disabled>Done, remove it</button>
+        </section>
+      </aside>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
